@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-	<title>Cronômetro</title>
+	<title>Cronômetro com Vue.js + Firebase</title>
 	<meta charset="utf-8">
-
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 </head>
 <body>
 	<div class="container" id="app" v-on:keyup.enter="salvar()">
@@ -44,91 +40,14 @@
 		</div>
 	</div>
 
-	<script>
-		let app = new Vue({
-			el: '#app',
-			data: {
-				nome: '',
-				milisegundos: 0,
-				segundos: 0,
-				minutos: 0,
-				tempo: '00:00',
-				lista: [],
-				intervalo: null,
-				started: false
-			},
-			methods: {
-				contar: function () {
-					this.started = true;
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+	<script src="assets/firebase.js"></script>
+	<script src="assets/script.js"></script>
 
-					this.intervalo = setInterval(function () {
-						app.segundos = app.segundos + 1;
-
-						if(app.segundos > 59) {
-							app.segundos = 0;
-							app.minutos = app.minutos + 1;
-						}
-
-						app.tempo = app.formataTempo(app.minutos) + ':' + app.formataTempo(app.segundos);
-					}, 1000);
-				},
-				parar: function () {
-					clearInterval(this.intervalo);
-				},
-				salvar: function () {
-					if(this.nome == '') {
-						alert('Digite um nome.');
-					} else {
-						this.lista.push({nome: this.nome, tempo: this.tempo});
-						this.nome = '';
-						this.zerar();
-					}
-				},
-				zerar: function () {
-					this.tempo = '00:00';
-					this.segundos = 0;
-					this.minutos = 0;
-					this.started = false;
-				},
-				formataTempo: function (valor) {
-					if(valor < 10) {
-						return '0'+valor;
-					} else {
-						return valor;
-					}
-				},
-				isStarted: function () {
-					return this.started;
-				},
-				action: function () {
-					if(this.started) {
-						this.parar();
-					} else {
-						this.contar();
-					}
-				},
-				classeTempo: function () {
-					if(this.started) {
-						return 'active';
-					} else {
-						return '';
-					}
-				}
-			}
-		})
-	</script>
-
-	<style>
-		.wrap-tempo { position: relative; }
-		.wrap-tempo .tempo { color: rgba(0,0,0,.3); font-size: 184px; }
-		.wrap-tempo.active .tempo { color: rgba(0,0,0,1); }
-		.wrap-tempo.active:hover .btn-action,
-		.wrap-tempo .btn-action { opacity: 1; }
-		.wrap-tempo.active .btn-action { opacity: 0; }
-		.wrap-tempo .btn-action { background-color: rgba(255,255,255,.8); position: absolute; font-size: 72px; border-radius: 50%; padding: 15px; line-height: 1; top: 50%; left: 50%; margin: 0; margin-left: -60px; margin-top: -60px; border: none; }
-		.btn-action .fa { line-height: 90px; }
-		.btn-action.play .fa-pause { display: none; }
-		.btn-action.pause .fa-play { display: none; }
-	</style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/style.css">
 </body>
 </html>
