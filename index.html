@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cronômetro</title>
+	<meta charset="utf-8">
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+</head>
+<body>
+	<div class="container" id="app">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-1">
+				<div class="panel panel-primary text-center">
+					<div class="panel-heading">
+						<div class="panel-title">Tempo</div>
+					</div>
+					<div class="panel-body">
+						{{tempo}}
+					</div>
+					<div class="panel-footer">
+						<div class="form-inline">
+							<input type="hidden" name="tempo" value="">
+							<input type="text" v-model="nome" name="nome" placeholder="Nome" required class="form-control">
+							<button class="btn btn-primary" v-on:click="salvar"><i class="fa fa-save"></i> Salvar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<table class="table table-striped">
+					<tbody>
+						<tr v-for="item in lista">
+							<td>{{item.nome}}</td>
+							<td>{{item.tempo}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		let app = new Vue({
+			el: '#app',
+			data: {
+				nome: '',
+				milisegundos: 0,
+				segundos: 0,
+				minutos: 0,
+				tempo: '00:00',
+				lista: [],
+				intervalo: null
+			},
+			methods: {
+				contar: function () {
+					this.intervalo = setInterval(function () {
+						app.segundos = app.segundos + 1;
+
+						if(app.segundos > 59) {
+							app.segundos = 0;
+							app.minutos = app.minutos + 1;
+						}
+
+						app.tempo = app.formataTempo(app.minutos) + ':' + app.formataTempo(app.segundos);
+					}, 1000);
+				},
+				parar: function () {
+					clearInterval(app.intervalo);
+				},
+				salvar: function () {
+					if(this.nome == '') {
+						alert('Digite um nome.');
+					} else {
+						this.lista.push({nome: this.nome, tempo: this.tempo});
+						this.nome = '';
+						this.zerar();
+					}
+				},
+				zerar: function () {
+					this.tempo = 0;
+					this.segundos = 0;
+					this.minutos = 0;
+				},
+				formataTempo: function (valor) {
+					if(valor < 10) {
+						return '0'+valor;
+					} else {
+						return valor;
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
