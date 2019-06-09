@@ -54,7 +54,7 @@ let app = new Vue({
 					app.getListaTempos();
 					app.nome = '';
 					app.zerar();
-					app.salvarDisabled = true;
+					app.salvarDisabled = false;
 				}).catch(error => {
 					console.log('error', error);
 				});
@@ -83,6 +83,8 @@ let app = new Vue({
 			if(this.started) {
 				this.parar();
 				this.toggleMenu();
+
+				this.$refs.nome.focus();
 			} else {
 				this.contar();
 			}
@@ -114,10 +116,13 @@ let app = new Vue({
 
 					app.lista.push({ data: data_formated, itens : value.val() });
 				});
+			}).then(() => {
+				var container = app.$refs.listaTempos;
+				container.scrollTop = container.scrollHeight;
 			});
 		}
 	},
-	created: function () {
+	mounted: function () {
 		this.getListaTempos();
 	}
 })

@@ -13,7 +13,7 @@
 				Histórico de tempo
 			</button>
 
-			<div class="lista-tempos">
+			<div class="lista-tempos" ref="listaTempos">
 				<div class="group" v-for="dia in lista">
 					<div class="day">{{dia.data}}</div>
 					<ul class="list-unstyled" v-for="item in dia.itens">
@@ -26,7 +26,7 @@
 
 			<div class="salvar-tempo">
 				<div class="form-inline">
-					<input type="text" name="nome" placeholder="Nome" class="form-control" v-model="nome" required>
+					<input type="text" name="nome" ref="nome" placeholder="Nome" class="form-control" v-model="nome" required>
 					<button class="btn btn-primary" v-on:click="salvar" v-bind:disabled="!isDisabled()"><i class="fa fa-fw fa-save"></i></button>
 				</div>
 			</div>

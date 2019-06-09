@@ -1,4 +1,9 @@
 body { background-color: #343434; color: #FFF; overflow: hidden; }
+
+.box-menu,
+.box-tempo,
+.box-tempo::before { -webkit-transition: all .5s cubic-bezier(.215,.61,.355,1); -moz-transition: all .5s cubic-bezier(.215,.61,.355,1); -o-transition: all .5s cubic-bezier(.215,.61,.355,1); transition: all .5s cubic-bezier(.215,.61,.355,1); }
+
 .box-tempo { min-height: 100vh; display: flex; justify-content: space-around; align-items: center; flex-direction: column; }
 .wrap-tempo { border: solid 2px #CCC; border-radius: 50%; width: 500px; height: 500px; display: inline-flex; justify-content: center; align-items: center; font-size: 112px; position: relative; }
 .box-tempo.active .wrap-tempo { border-color: lightgreen; }
@@ -14,7 +19,8 @@ body { background-color: #343434; color: #FFF; overflow: hidden; }
 .box-menu { position: fixed; left: 100%; top: 0; height: 100%; width: 280px; background-color: #222; z-index: 9; }
 .box-menu.active { left: calc(100% - 280px); }
 .box-menu.active + .box-tempo { filter: blur(12px); }
-.box-menu.active + .box-tempo::before { content: ''; width: 100%; height: 100%; left: 0; top: 0; background-color: rgba(0,0,0,.7); position: absolute; }
+.box-menu + .box-tempo::before { content: ''; width: 100%; height: 100%; left: 0; top: 0; position: absolute; pointer-events: none; }
+.box-menu.active + .box-tempo::before { background-color: rgba(0,0,0,.7); pointer-events: initial; }
 .box-menu > button { font-size: 20px; font-weight: 600; line-height: 45px; padding: 5px 0; color: #FFF; width: calc(100% + 50px); margin-left: -50px; margin-top: 40px; border: none; }
 .box-menu > button span { float: left; width: 50px; text-align: center; height: 45px; display: inline-flex; justify-content: center; align-items: center; font-size: 28px; line-height: 1; }
 
