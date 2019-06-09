@@ -3,46 +3,50 @@
 <head>
 	<title>Cronômetro com Vue.js + Firebase</title>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body>
-	<div class="container" id="app" v-on:keyup.enter="salvar()">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-1">
-				<div class="panel panel-primary text-center">
-					<div class="panel-heading">
-						<div class="panel-title">Tempo</div>
-					</div>
-					<div class="panel-body">
-						<div class="wrap-tempo" v-bind:class="classeTempo()">
-							<div class="tempo">{{tempo}}</div>
-							<button class="btn-action" v-bind:class="{play: !isStarted(), pause: isStarted()}" v-on:click="action"><i class="fa fa-fw fa-play"></i><i class="fa fa-fw fa-pause"></i></button>
-						</div>
-					</div>
-					<div class="panel-footer">
-						<div class="form-inline">
-							<input type="hidden" name="tempo" value="">
-							<input type="text" v-model="nome" name="nome" placeholder="Nome" required class="form-control">
-							<button class="btn btn-primary" v-on:click="salvar" v-bind:disabled="!isStarted()"><i class="fa fa-save"></i> Salvar</button>
-						</div>
-					</div>
+	<div id="app" v-on:keyup.enter="salvar()">
+		<div class="box-menu" v-bind:class="classeMenu()">
+			<button class="bg-primary" v-on:click="toggleMenu">
+				<span><i class="fa fa-fw fa-bars"></i></span>
+				Histórico de tempo
+			</button>
+
+			<div class="lista-tempos">
+				<div class="group" v-for="dia in lista">
+					<div class="day">{{dia.data}}</div>
+					<ul class="list-unstyled" v-for="item in dia.itens">
+						<li>
+							{{item.nome}}<small>{{item.tempo}}</small>
+						</li>
+					</ul>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<table class="table table-striped">
-					<tbody>
-						<tr v-for="item in lista">
-							<td>{{item.nome}}</td>
-							<td>{{item.tempo}}</td>
-						</tr>
-					</tbody>
-				</table>
+
+			<div class="salvar-tempo">
+				<div class="form-inline">
+					<input type="text" name="nome" placeholder="Nome" class="form-control" v-model="nome" required>
+					<button class="btn btn-primary" v-on:click="salvar" v-bind:disabled="!isDisabled()"><i class="fa fa-fw fa-save"></i></button>
+				</div>
 			</div>
 		</div>
+
+		<div class="box-tempo" v-bind:class="classeTempo()">
+			<div class="wrap-tempo" v-bind:class="classeTempo()">
+				<div class="tempo">{{tempo}}<small>{{milisegundos}}</small></div>
+			</div>
+
+			<div class="wrap-controls">
+				<button class="bg-primary" v-on:click="action"><i class="fa fa-fw fa-play"></i><i class="fa fa-fw fa-pause"></i></button>
+			</div>
+		</div>
+
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
 	<script src="assets/firebase.js"></script>
 	<script src="assets/script.js"></script>
 

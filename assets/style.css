@@ -1,10 +1,31 @@
-.wrap-tempo { position: relative; }
-.wrap-tempo .tempo { color: rgba(0,0,0,.3); font-size: 184px; }
-.wrap-tempo.active .tempo { color: rgba(0,0,0,1); }
-.wrap-tempo.active:hover .btn-action,
-.wrap-tempo .btn-action { opacity: 1; }
-.wrap-tempo.active .btn-action { opacity: 0; }
-.wrap-tempo .btn-action { background-color: rgba(255,255,255,.8); position: absolute; font-size: 72px; border-radius: 50%; padding: 15px; line-height: 1; top: 50%; left: 50%; margin: 0; margin-left: -60px; margin-top: -60px; border: none; }
-.btn-action .fa { line-height: 90px; }
-.btn-action.play .fa-pause { display: none; }
-.btn-action.pause .fa-play { display: none; }
+body { background-color: #343434; color: #FFF; overflow: hidden; }
+.box-tempo { min-height: 100vh; display: flex; justify-content: space-around; align-items: center; flex-direction: column; }
+.wrap-tempo { border: solid 2px #CCC; border-radius: 50%; width: 500px; height: 500px; display: inline-flex; justify-content: center; align-items: center; font-size: 112px; position: relative; }
+.box-tempo.active .wrap-tempo { border-color: lightgreen; }
+.box-tempo.active .wrap-tempo::before { content: ''; border: solid 1px lightgreen; border-radius: inherit; width: 100%; height: 100%; position: absolute; left: 0; top: 0; animation: pulse 1s infinite; }
+.wrap-tempo .tempo { width: 300px; }
+.wrap-tempo small { font-size: 65%; opacity: .6; }
+.wrap-controls button { border: none; width: 60px; height: 60px; border-radius: 50%; font-size: 24px; box-shadow: 0 0 12px 0 rgba(0,0,0,.6); -webkit-box-shadow: 0 0 12px 0 rgba(0,0,0,.6); }
+.wrap-controls button .fa { width: 24px; }
+.wrap-controls button .fa-pause { display: none; }
+.box-tempo.active .wrap-controls button .fa-pause { display: inherit; }
+.box-tempo.active .wrap-controls button .fa-play { display: none; }
+
+.box-menu { position: fixed; left: 100%; top: 0; height: 100%; width: 280px; background-color: #222; z-index: 9; }
+.box-menu.active { left: calc(100% - 280px); }
+.box-menu.active + .box-tempo { filter: blur(12px); }
+.box-menu.active + .box-tempo::before { content: ''; width: 100%; height: 100%; left: 0; top: 0; background-color: rgba(0,0,0,.7); position: absolute; }
+.box-menu > button { font-size: 20px; font-weight: 600; line-height: 45px; padding: 5px 0; color: #FFF; width: calc(100% + 50px); margin-left: -50px; margin-top: 40px; border: none; }
+.box-menu > button span { float: left; width: 50px; text-align: center; height: 45px; display: inline-flex; justify-content: center; align-items: center; font-size: 28px; line-height: 1; }
+
+.box-menu .lista-tempos { padding: 0 10px; margin-top: 30px; font-size: 14px; max-height: calc(100% - 200px); overflow-y: auto; }
+.box-menu .lista-tempos .group { margin-bottom: 20px; }
+.box-menu .lista-tempos .day { background-color: #929292; font-size: 11px; display: table; margin: 5px auto 15px; color: #f3f3f3; padding: 5px 10px; line-height: 1; border-radius: 21px; }
+.box-menu .lista-tempos li { clear: both; border-bottom: dashed 1px #767676; padding: 5px 0; color: #CCC;  }
+.box-menu .lista-tempos small { float: right; line-height: 21px; opacity: .8; }
+
+.box-menu .salvar-tempo { margin: 10px auto 0; display: table; }
+
+@-webkit-keyframes pulse {
+	100% { width: calc(100% + 50px); height: calc(100% + 50px); margin-left: -25px; margin-top: -25px; opacity: 0; }
+}
