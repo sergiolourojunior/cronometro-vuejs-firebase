@@ -1,1 +1,1 @@
-# Cronometro com Vue.js + Firabase
+# Cronometro com Vue.js + Firebase
